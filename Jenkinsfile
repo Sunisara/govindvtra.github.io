@@ -5,7 +5,7 @@ pipeline {
       steps {
         sleep 20
         echo 'Success!!!'
-        archiveArtifacts(artifacts: 'target/*.jar', fingerprint: true)
+        archiveArtifacts(artifacts: 'target/*.jar', fingerprint: true, allowEmptyArchive: true)
       }
     }
     stage('test') {
