@@ -1,36 +1,28 @@
 pipeline {
-  agent any
+  agent none
   stages {
     stage('build') {
-      parallel {
-        stage('build') {
-          steps {
-            sleep 20
-            echo 'Success!!!'
-            archiveArtifacts(artifacts: 'target/*.jar', fingerprint: true, allowEmptyArchive: true)
-            echo 'I am a ${BUZZ_NAME}'
-          }
+      agent {
+        node {
+          label 'Anjana'
         }
-        stage('build new') {
-          steps {
-            echo 'my new parallel build'
-          }
-        }
+
+      }
+      steps {
+        sleep 2
+        echo 'Success!!!'
+        echo 'I am a ${BUZZ_NAME}'
       }
     }
     stage('test') {
-      parallel {
-        stage('test') {
-          steps {
-            echo 'Another message'
-            junit(testResults: '**/surefire-reports/**/*.xml', allowEmptyResults: true)
-          }
+      agent {
+        node {
+          label 'Anjana'
         }
-        stage('new test') {
-          steps {
-            echo 'my new test '
-          }
-        }
+
+      }
+      steps {
+        echo 'Another message'
       }
     }
   }
